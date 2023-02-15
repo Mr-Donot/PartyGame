@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+<!-- Notre page est en anglais -->
+
+    <head>
+        <!-- Il est obligatoire de préciser un encodage de caractères et un titre pour la page -->
+        <meta charset="utf-8">
+        <title>SaturnOne</title>
+        <script src="./js/displayer.js" defer></script>
+        <script src="./js/newGame.js" defer></script>
+        <link rel="stylesheet" href="css/style.css">
+
+    </head>
+
+    <body>
+        <section id="menuPrincipal">
+            <button id="buttonNewGame">Nouvelle partie</button>
+            <button id="buttonJoinGame">Rejoindre une partie</button>
+            <button id="buttonTutorial">Tuto</button>
+            <button id="buttonQuit">Quitter</button>
+        </section>
+
+        <section id="pageTutorial">
+            <p>ICI CEST LE TUTO</p>
+            <button class="buttonRetourMenu">Retour</button>
+        </section>
+
+        <section id="menuCreateGame">
+            <div id="paramNbJoueurs">
+                <p id="textNbJoueurs">Nombre de joueurs</p>
+                <button id="buttonMoinsJoueur">-</button>
+                <input id="valueJoueurs" type="number" value="2" min="2" max="10"/>
+                <button id="buttonPlusJoueur">+</button>
+                <p><i>Max 10 joueurs</i></p>
+            </div>
+            <div id="paramNbSecondes">
+                <p id="textNbSecondes">Temps (secondes)</p>
+                <button id="buttonMoinsSeconde">-</button>
+                <input id="valueSecondes" type="number" value="60" min="10" max="180"/>
+                <button id="buttonPlusSeconde">+</button>
+                <p><i>Max 180 secondes</i></p>
+            </div>
+            <button class="buttonRetourMenu">Retour</button>
+            <button id="buttonCreateGame">C'EST PARTI</button>
+        </section>
+
+        <section id="waitingRoom">
+            <p id="codeForRoom"></p>
+            <p id="textWaitingRoom"></p>
+            <button class="buttonRetourMenu">Annuler la partie</button>
+        </section>
+        
+        <section id="menuJoin">
+            <div id="containerTest">
+                <p>test Join</p>
+            </div>
+            <button class="buttonRetourMenu">Retour</button>
+        </section>
+    </body>
+
+</html>
+
