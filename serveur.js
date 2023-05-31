@@ -10,11 +10,24 @@ app.use('/api', api);
 var path = require('path');
 app.set('port', (process.env.PORT || 4444));
 
+
+
+
+
 //test socket.io
 const server = require('http').createServer(app);
+const io = require('socket.io')(server);
 
-
-
+io.on('connection', (socket) => {
+  console.log('\n------------\nuser connected !\n------------\n');
+  //Evenement en live reception d'un msg de qqn, et envoie a tout le monde
+  socket.on('addPlayer', (data) => {
+    io.emit('addPlayer', data);
+  });
+  socket.on('launchGame', (data) => {
+    io.emit('launchGame', data);
+  });
+});
 
 //For avoidong Heroku $PORT error
 server.listen(app.get('port'), function() {

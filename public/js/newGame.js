@@ -1,3 +1,4 @@
+
 //----PLUS & MOINS JOUEURS ----//
 const baliseButtonMoinsJoueur = document.querySelector("#buttonMoinsJoueur");
 baliseButtonMoinsJoueur.addEventListener("click", minusNbJoueur);
@@ -52,8 +53,16 @@ function plusNbSecondes(){
 //-------LAUNCH THE GAME-------//
 const baliseButtonCreateGame = document.querySelector("#buttonCreateGame");
 baliseButtonCreateGame.addEventListener("click", launchGame);
+let code;
 
-function launchGame(){
+async function launchGame(){
+    const balisePseudoPlayerHost = document.querySelector("#pseudoPlayerHost");
+    const pseudoHost = balisePseudoPlayerHost.value;
+    if (pseudoHost == ""){
+        //TODO ajouter msg "veuillez entrer un pseudo"
+        return;
+    }
+
     const baliseSectionMenuCreateGame = document.querySelector("#menuCreateGame");
     baliseSectionMenuCreateGame.style.display = "none";
 
@@ -62,11 +71,32 @@ function launchGame(){
 
     const baliseTextWaitingRoom = document.querySelector("#textWaitingRoom");
     const baliseInputNbJoueur = document.querySelector("#valueJoueurs");
-    baliseTextWaitingRoom.innerHTML = "Waiting players : 0/" + baliseInputNbJoueur.value;
+    const nbJoueur = baliseInputNbJoueur.value;
+
+    
+   
+    baliseTextWaitingRoom.innerHTML = "Waiting players : 1/" + nbJoueur;
     const baliseCodeForRoom = document.querySelector("#codeForRoom");
-    const code = generateCode(4);
+    code = generateCode(4);
+    const baliseInputNbSeconde = document.querySelector("#valueSecondes");
+    const nbSeconde = baliseInputNbSeconde.value;
     baliseCodeForRoom.innerHTML = "Code : <strong>" + code + "</strong>";
-    //mettre dans la db
+    let response = await fetch('/api/rooms/addRoom/'+code+'/'+nbJoueur+'/'+nbSeconde, {
+        method: "post",
+        headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+        }
+    })
+    if (response.status == 200){
+        fetch('api/rooms/addPlayer/'+code+'/'+pseudoHost, {
+            method: "post",
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            }
+        });
+    }    
 }
 
 function generateCode(lengthCode){
@@ -82,3 +112,19 @@ function getRandomInt(min, max) {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
+
+//Récup de n'importe quel message de n'importe quel utilisateur
+socket.on('addPlayer', function(data) {
+    const baliseTextWaitingRoom = document.querySelector("#textWaitingRoom");
+    if (data.room.codeRoom == code){
+        baliseTextWaitingRoom.innerHTML = "Waiting players : " + data.room.playersList.length + "/" + data.room.nbMaxPlayer;
+        if (data.room.playersList.length == data.room.nbMaxPlayer){
+            let objectDataToSentToAPI = {
+                "room" : data.room
+            }
+            socket.emit("launchGame", objectDataToSentToAPI);
+        }
+    }    
+});
+

@@ -70,3 +70,27 @@ input{
 #textNbSecondes{
     font-weight: bold;
 }
+
+#containerJoin{
+    display: flex;
+}
+
+#codeToEnterRoom{
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    width: 30%;
+}
+
+#pseudoPlayer{
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    width: 30%;
+}
+
+#waitingRoomJoin{
+    display: none;
+}
+
+#gamePage{
+    display: none;
+}

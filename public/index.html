@@ -6,8 +6,10 @@
         <!-- Il est obligatoire de préciser un encodage de caractères et un titre pour la page -->
         <meta charset="utf-8">
         <title>SaturnOne</title>
+        <script type="text/javascript" src="/socket.io/socket.io.js"></script>
         <script src="./js/displayer.js" defer></script>
         <script src="./js/newGame.js" defer></script>
+        <script src="./js/joinGame.js" defer></script>
         <link rel="stylesheet" href="css/style.css">
 
     </head>
@@ -27,6 +29,8 @@
 
         <section id="menuCreateGame">
             <div id="paramNbJoueurs">
+                <p>Pseudo : </p>
+                <input id="pseudoPlayerHost" type="text"/>
                 <p id="textNbJoueurs">Nombre de joueurs</p>
                 <button id="buttonMoinsJoueur">-</button>
                 <input id="valueJoueurs" type="number" value="2" min="2" max="10"/>
@@ -51,12 +55,26 @@
         </section>
         
         <section id="menuJoin">
-            <div id="containerTest">
-                <p>test Join</p>
+            <div id="containerJoin">
+                <p>Pseudo : </p>
+                <input id="pseudoPlayer" type="text"/>
+                <p>Code de la partie : </p>
+                <input id="codeToEnterRoom" type="text"/>
             </div>
+            <div id="divWhenCodeFalse"></div>
+            <button class="buttonRetourMenu">Retour</button>
+            <button id="buttonJoinGameWithCode">Rejoindre la partie</button>
+        </section>
+
+        <section id="waitingRoomJoin">
+            <p id="textWaitingRoomJoin">En attente d'autres joueurs, la partie va bientôt commencer !</p>
             <button class="buttonRetourMenu">Retour</button>
         </section>
-    </body>
 
+        <section id="gamePage">
+            <p id="textWaitingRoomJoin">CEST PARTI POUR LA PARTIE !</p>
+        </section>
+
+    </body>
 </html>
 

@@ -1,3 +1,8 @@
+//VARIABLES GLOBALES //
+const socket = io();
+//-------------------//
+
+
 //-------GO TO CREATE GAME--------//
 const baliseButtonNewGame = document.querySelector("#buttonNewGame");
 baliseButtonNewGame.addEventListener("click", loadCreatePage);
@@ -19,7 +24,8 @@ baliseButtonJoinGame.addEventListener("click", loadJoinPage);
 function loadJoinPage(){
     const baliseSectionMenuPrincipal = document.querySelector("#menuPrincipal");
     baliseSectionMenuPrincipal.style.display = "none";
-
+    const baliseDivWhenCodeFalse = document.querySelector("#divWhenCodeFalse");
+    baliseDivWhenCodeFalse.innerHTML = "";
     const baliseSectionMenuJoinGame = document.querySelector("#menuJoin");
     baliseSectionMenuJoinGame.style.display = "block";
 }
@@ -54,3 +60,21 @@ for (let i = 0 ; i < allBalisesRetourToMenu.length ; i++){
 }
 //--------------------------------//
 
+socket.on('launchGame', function(data) {
+    const myPseudo = document.querySelector("#pseudoPlayer").value;
+    const pseudoHost = document.querySelector("#pseudoPlayerHost").value;
+    
+    for (let pseudo of data.room.playersList){
+
+        if (myPseudo == pseudo){
+            document.querySelector("#waitingRoomJoin").style.display = "none";    
+            document.querySelector("#gamePage").style.display = "block";
+
+        }
+        if (pseudoHost == pseudo){
+            document.querySelector("#waitingRoom").style.display = "none";    
+            document.querySelector("#gamePage").style.display = "block";    
+
+        }
+    }
+})
